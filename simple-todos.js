@@ -35,7 +35,9 @@ if (Meteor.isClient) {
             var text = $text.value;
             Tasks.insert({
                 text: text,
-                createdAt: new Date()
+                createdAt: new Date(),
+                owner: Meteor.userId(),
+                username: Meteor.user().username
             });
             $text.value = "";
             return false;
@@ -51,5 +53,8 @@ if (Meteor.isClient) {
         "click .delete": function () {
             Tasks.remove(this._id);
         }
+    });
+    Accounts.ui.config({
+        passwordSignupFields: "USERNAME_ONLY"
     });
 }
